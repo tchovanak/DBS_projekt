@@ -1,9 +1,14 @@
 package sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import sk.fiit.tomas.chovanak.dbs.gui.ViewController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import sk.fiit.tomas.chovanak.dbs.gui.MainViewController;
 
 public class ZamestnanecZmluvaDAO extends DAOobject{
 
@@ -11,6 +16,8 @@ public class ZamestnanecZmluvaDAO extends DAOobject{
 		super(connection);
 	}
 
+	private static Map<String, String> predajcaMap = null;
+	
 	/**
 	 * Vrati vypis vsetkych zaznamov na zaklade vstupnych parametrov
 	 * @param id_zamestnanec
@@ -25,26 +32,24 @@ public class ZamestnanecZmluvaDAO extends DAOobject{
 		String query = "";
 		
 		// TENTO ROZHODOVACI BLOK RIESI SITUACIE KEDY SU VYPLNENE ALEBO NEVYPLNENE ROZNE COMBO BOX
-		
-		if(id_zamestnanec != ViewController.undefined && prve_meno != ViewController.undefined && priezvisko != ViewController.undefined){
+		if(!id_zamestnanec.equals("") && !prve_meno.equals("") && !priezvisko.equals("")){
 			query = "SELECT * FROM zamestnanec_zmluva WHERE id = " + id_zamestnanec + " AND prve_meno = '" + prve_meno + "' AND priezvisko = '" + priezvisko + "';";
-		}else if (prve_meno != ViewController.undefined && priezvisko != ViewController.undefined){
+		}else if (!prve_meno.equals("") && !priezvisko.equals("")){
 			query = "SELECT * FROM zamestnanec_zmluva WHERE prve_meno = '" + prve_meno + "' AND priezvisko = '" + priezvisko + "';";
-		}else if (prve_meno != ViewController.undefined && id_zamestnanec != ViewController.undefined){
+		}else if (!prve_meno.equals("") && !id_zamestnanec.equals("")){
 			query = "SELECT * FROM zamestnanec_zmluva WHERE prve_meno = '" + prve_meno + "' AND id = " + id_zamestnanec + ";";
-		}else if (priezvisko != ViewController.undefined && id_zamestnanec != ViewController.undefined){
+		}else if (!priezvisko.equals("") && !id_zamestnanec.equals("")){
 			query = "SELECT * FROM zamestnanec_zmluva WHERE priezvisko = '" + priezvisko + "' AND id = " + id_zamestnanec + ";";
-		}else if (priezvisko != ViewController.undefined){
+		}else if (!priezvisko.equals("")){
 			query = "SELECT * FROM zamestnanec_zmluva WHERE priezvisko = '" + priezvisko + "';";
-		}else if (prve_meno != ViewController.undefined){
+		}else if (!prve_meno.equals("")){
 			query = "SELECT * FROM zamestnanec_zmluva WHERE prve_meno = '" + prve_meno + "';";
-		}else if (id_zamestnanec != ViewController.undefined){
+		}else if (!id_zamestnanec.equals("")){
 			query = "SELECT * FROM zamestnanec_zmluva WHERE id = " + id_zamestnanec + ";";
 		}
 		
 		List<ResultRow> rs = executeStatement(query);
 		String ret = "";
-		
 		
 		// TU SA URCUJE FORMAT VYPISU 
 		for(ResultRow rr : rs){
@@ -59,7 +64,16 @@ public class ZamestnanecZmluvaDAO extends DAOobject{
 		
 		return ret;
 	}
-
+	
+	/**
+	 * preťažená metóda  
+	 * @param id_zamestnanec
+	 * @return
+	 */
+	public String getZamestnanec(String id_zamestnanec) {
+		return getZamestnanec(id_zamestnanec,"","","","");
+	}
+	
 	
 	/**
 	 * 
@@ -75,38 +89,77 @@ public class ZamestnanecZmluvaDAO extends DAOobject{
 			
 			String query = "";
 		
-			if(id_novy != ViewController.undefined){
+			if(!id_novy.equals("")){
 				query = "UPDATE zamestnanec_zmluva SET id = " + id_novy + 
 						" WHERE id = " + id_povodny + " ;";
 				executeStatementUpdate(query);
 			}
 			
-			if(prve_meno != ViewController.undefined){
+			if(!prve_meno.equals("")){
 				query = "UPDATE zamestnanec_zmluva SET " +
 						" prve_meno = '" + prve_meno + 
 						"' WHERE id = " + id_povodny + " ;";
 				executeStatementUpdate(query);
 			}
 			
-			if(priezvisko != ViewController.undefined){
+			if(!priezvisko.equals("")){
 				query = "UPDATE zamestnanec_zmluva SET " +  
 						" priezvisko = '" + priezvisko +
 						"' WHERE id = " + id_povodny + " ;";
 				executeStatementUpdate(query);
 			}
 			
-			if(datum_nastupu != ViewController.undefined){
+			if(!datum_nastupu.equals("")){
 				query = "UPDATE zamestnanec_zmluva SET " +
 						"datum_nastup = '" + datum_nastupu +
 						"' WHERE id = " + id_povodny + " ;";
 				executeStatementUpdate(query);
 			}
 			
-			if(datum_ukoncenia != ViewController.undefined){
+			if(!datum_ukoncenia.equals("")){
 				query = "UPDATE zamestnanec_zmluva SET " +
 						"datum_skoncenia_platnosti = '" + datum_ukoncenia + 
 						"' WHERE id = " + id_povodny + " ;";
 				executeStatementUpdate(query);
 			}	
 	}
+
+	public ObservableList<String> getAllNames() {
+		
+		//if(predajcaMap == null){
+			predajcaMap = new HashMap<String,String>();
+			String query = "SELECT zm.priezvisko,zm.prve_meno,zm.id FROM zamestnanec_zmluva zm";
+			System.out.println(query);
+			List<ResultRow> rrlst = executeStatement(query);
+			for (ResultRow rr : rrlst){
+				predajcaMap.put(rr.getRowDataList().get(0) + " " + rr.getRowDataList().get(1), rr.getRowDataList().get(2));
+		    }
+		
+		ObservableList<String> ret = FXCollections.observableArrayList();
+		for(Entry<String,String> e : predajcaMap.entrySet()){
+			ret.add(e.getKey());
+		}
+		
+		return ret;
+	}
+	
+	/**
+	 * Vymaže záznam z databázy
+	 * @param id_zamestnanec
+	 */
+	public void delete(String id_zamestnanec) {
+		String query = "";	
+		query = "DELETE FROM zamestnanec_zmluva WHERE id = " + id_zamestnanec + " ;";
+		System.out.println(query);
+		executeStatementUpdate(query);
+	}
+	
+	public static String convertNameToId(String name){
+		return predajcaMap.get(name);
+	}
+
+	
+
+
+	
 }

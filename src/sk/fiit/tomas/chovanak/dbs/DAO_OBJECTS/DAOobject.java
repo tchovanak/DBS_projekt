@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import sk.fiit.tomas.chovanak.dbs.gui.ViewController;
+import sk.fiit.tomas.chovanak.dbs.gui.MainViewController;
 
 
 /**
@@ -83,7 +83,7 @@ public class DAOobject {
 	        result = stmt.executeUpdate(query);
 	        
 	    } catch (SQLException e ) {
-	    	ViewController.outputState(e.getMessage());
+	    	MainViewController.outputState(e.getMessage());
 	    } finally {
 	        if (stmt != null) { try {
 	        	stmt.close();
@@ -91,12 +91,16 @@ public class DAOobject {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} }
-	        ViewController.outputState("Transakcia úspešne dokon�?ená!\n");
+	        MainViewController.outputState("Transakcia úspešne dokončená!\n");
 	    }
 		if(result == -1){
-			ViewController.outputState("Transakcia neúspešná");
+			MainViewController.outputState("Transakcia neúspešná");
 		}
 		return result;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
 	
 	

@@ -14,8 +14,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			 AnchorPane page = (AnchorPane) FXMLLoader.load(Main.class.getResource("main-view.fxml"));
-			 ViewController.initComboBoxes();
+			 AnchorPane page = (AnchorPane) FXMLLoader.load(Main.class.getResource("view.fxml"));
+			// MainViewController.initComboBoxes();
 	            Scene scene = new Scene(page);
 	            primaryStage.setScene(scene);
 	            primaryStage.setTitle("DBS - VIEW");
