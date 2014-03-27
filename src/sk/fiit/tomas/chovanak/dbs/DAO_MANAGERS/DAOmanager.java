@@ -8,7 +8,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS.ClientDAO;
 import sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS.PredajProduktuDAO;
+import sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS.ProduktDAO;
+import sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS.StatisticsDAO;
 import sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS.ZamestnanecZmluvaDAO;
 
 
@@ -19,10 +22,17 @@ public class DAOmanager {
 		  protected PredajProduktuDAO  predajProduktuDAO  = null;
 		  
 		  protected ZamestnanecZmluvaDAO zamestnanecZmluvaDAO = null;
-		  
+
+   		  protected ProduktDAO produktDAO;
+   		  
+   		  protected ClientDAO clientDAO;
+   		  
+   		  protected StatisticsDAO statisticsDAO;
+ 		  
 		  private void openConnection(){	
 			  	Properties props = new Properties();
-				try {
+			  	
+			  	try {
 					props.load(new FileInputStream("etc/db.properties"));
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -30,7 +40,9 @@ public class DAOmanager {
 					e.printStackTrace();
 				}
 				try {
+					
 					this.connection = DriverManager.getConnection(props.getProperty("url"),props.getProperty("username"),props.getProperty("password"));
+					
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -87,6 +99,7 @@ public class DAOmanager {
 		  public Object OpenTransactionAndClose(final DaoCommand command){
 			  try{
 				  openConnection();
+				  System.out.println("connection opened");
 				  return executeAndClose(new DaoCommand(){
 	
 					  @Override
@@ -95,6 +108,7 @@ public class DAOmanager {
 					  }
 				  });
 			  }finally{
+				  System.out.println("connection closed");
 				  closeConnection();
 			  }
 		  }
@@ -121,11 +135,10 @@ public class DAOmanager {
 		  /************************ FACTORY METODY na DAO objekty ******************************************/
 		  
 		  public PredajProduktuDAO getPredajProduktuDAO(){
-		    
 			  if(this.predajProduktuDAO == null){
 				  this.predajProduktuDAO = new PredajProduktuDAO(this.connection);
 			  }
-			  
+			  this.predajProduktuDAO.setConnection(this.connection);
 			  return this.predajProduktuDAO;
 		  }
 
@@ -134,8 +147,32 @@ public class DAOmanager {
 			  if(this.zamestnanecZmluvaDAO == null){
 				  this.zamestnanecZmluvaDAO = new ZamestnanecZmluvaDAO(this.connection);
 			  }
-			  
+			  this.zamestnanecZmluvaDAO.setConnection(this.connection);
 			  return this.zamestnanecZmluvaDAO;
 		}
+
+		public ProduktDAO getProduktDAO() {
+			 if(this.produktDAO == null){
+				  this.produktDAO = new ProduktDAO(this.connection);
+			  }
+			 this.produktDAO.setConnection(this.connection);
+			  return this.produktDAO;
+		}
+
+		public ClientDAO getClientDAO() {
+			 if(this.clientDAO == null){
+				  this.clientDAO = new ClientDAO(this.connection);
+			  }
+			  this.clientDAO.setConnection(this.connection);
+			  return this.clientDAO;
+		}
 		
+		public StatisticsDAO getStatisticsDAO() {
+			 if(this.statisticsDAO == null){
+				  this.statisticsDAO = new StatisticsDAO(this.connection);
+			  }
+			  this.statisticsDAO.setConnection(this.connection);
+			  return this.statisticsDAO;
+		}
+	
 }
