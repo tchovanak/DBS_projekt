@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="1050.0" styleClass=", theme" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sk.fiit.tomas.chovanak.dbs.gui.MainViewController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Accordion expandedPane="$null" layoutX="229.0" layoutY="100.0" />
+    <TabPane layoutX="37.0" layoutY="14.0" prefHeight="619.0000999999975" prefWidth="478.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab text="Pridat predaj">
+          <content>
+            <AnchorPane id="Content" fx:id="anchorInsert" minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="464.0">
+              <!-- TODO Add Nodes -->
+              <children>
+                <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="553.9999000000025" prefWidth="450.0" styleClass="darkList">
+                  <children>
+                    <Button fx:id="btnPredaj" layoutX="32.0" layoutY="403.0" mnemonicParsing="false" onAction="#insertNewSell" prefHeight="61.0" prefWidth="343.0" text="Potvrd predaj" />
+                    <Label layoutX="46.0" layoutY="21.0" prefWidth="343.0" text="PRIDANIE ZAZNAMU O PREDAJI" />
+                    <Label layoutX="24.0" layoutY="174.0" text="produkt" />
+                    <Label layoutX="21.0" layoutY="244.0" text="predajca" />
+                    <Label layoutX="23.0" layoutY="321.0" text="klient" />
+                    <ComboBox fx:id="cmbProdukt" editable="true" layoutX="128.0" layoutY="168.0" prefHeight="39.0" prefWidth="247.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox fx:id="cmbPredajca" editable="true" layoutX="128.0" layoutY="244.0" prefHeight="39.0" prefWidth="247.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox fx:id="cmbKlient" editable="true" layoutX="128.0" layoutY="321.0" prefHeight="39.0" prefWidth="247.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox fx:id="cmbDatum" editable="true" layoutX="128.0" layoutY="101.0" prefHeight="39.0" prefWidth="247.0" promptText="dd/mm/rrrr">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label layoutX="26.0" layoutY="113.0" text="datum" />
+                  </children>
+                  <stylesheets>
+                    <URL value="@main-view.css" />
+                  </stylesheets>
+                </AnchorPane>
+              </children>
+              <padding>
+                <Insets bottom="200.0" left="150.0" right="600.0" top="500.0" />
+              </padding>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Upravit zmluvu">
+          <content>
+            <AnchorPane id="Content" fx:id="anchorUpdate" minHeight="0.0" minWidth="0.0" prefHeight="454.0" prefWidth="455.0">
+              <!-- TODO Add Nodes -->
+              <children>
+                <AnchorPane layoutX="13.0" layoutY="21.0" prefHeight="547.0" prefWidth="451.0" styleClass="darkList">
+                  <children>
+                    <Button id="btnPredaj" fx:id="btnAtualizujZaznam" layoutX="231.0" layoutY="440.0" mnemonicParsing="false" onAction="#updateDataEmployee" prefHeight="61.0" prefWidth="174.0" text="Aktualizuj zaznam" />
+                    <Label layoutX="14.0" layoutY="21.0" prefWidth="409.0" text="UPRAVENIE ZAZNAMU O ZAMESTNANCOVI" />
+                    <Label layoutX="18.0" layoutY="180.0" text="prve meno" />
+                    <Label layoutX="19.0" layoutY="250.0" text="priezvisko" />
+                    <Label layoutX="22.0" layoutY="308.0" prefHeight="54.0" prefWidth="95.9998779296875" text="datum &#10;nastupu" />
+                    <ComboBox fx:id="cmbPrveMeno" editable="true" layoutX="152.0" layoutY="174.0" prefHeight="39.0" prefWidth="97.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox fx:id="cmbPriezvisko" editable="true" layoutX="152.0" layoutY="244.0" prefHeight="39.0" prefWidth="97.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox fx:id="cmbDatumNastupu" editable="true" layoutX="152.0" layoutY="315.0" prefHeight="39.0" prefWidth="134.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox fx:id="cmbZamestnanec" editable="true" layoutX="152.0" layoutY="101.0" prefHeight="39.0" prefWidth="97.0" promptText="" value="$null">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label layoutX="26.0" layoutY="113.0" text="" />
+                    <Label layoutX="19.0" layoutY="107.0" prefHeight="49.0" prefWidth="118.0" text="id &#10;zamestnanec" />
+                    <Button fx:id="btnZobrazZamestnanec" layoutX="22.0" layoutY="440.0" mnemonicParsing="false" onAction="#zobrazZamestnanec" prefHeight="61.0" prefWidth="181.0" text="zobraz" />
+                    <ComboBox fx:id="cmbDatumUkoncenia" editable="true" layoutX="152.0" layoutY="380.0" prefHeight="39.0" prefWidth="134.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label layoutX="16.0" layoutY="380.0" text="datum&#10; ukoncenia" />
+                    <ComboBox id="cmbZamestnanec" fx:id="cmbZamestnanecNovy" editable="true" layoutX="308.0" layoutY="101.0" prefHeight="39.0" prefWidth="97.0" promptText="" value="$null">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox id="cmbPrveMeno" fx:id="cmbPrveMenoNovy" editable="true" layoutX="308.0" layoutY="174.0" prefHeight="39.0" prefWidth="97.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox id="cmbPriezvisko" fx:id="cmbPriezviskoNovy" editable="true" layoutX="308.0" layoutY="244.0" prefHeight="39.0" prefWidth="97.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox id="cmbDatumNastupu" fx:id="cmbDatumNastupuNovy" editable="true" layoutX="308.0" layoutY="316.0" prefHeight="39.0" prefWidth="134.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <ComboBox id="cmbDatumUkoncenia" fx:id="cmbDatumUkonceniaNovy" editable="true" layoutX="308.0" layoutY="380.0" prefHeight="39.0" prefWidth="134.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="unfilled" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label layoutX="156.0" layoutY="59.0" text="pôvodné" />
+                    <Label layoutX="310.0" layoutY="64.0" text="nové" />
+                  </children>
+                  <stylesheets>
+                    <URL value="@main-view.css" />
+                  </stylesheets>
+                </AnchorPane>
+              </children>
+              <padding>
+                <Insets bottom="200.0" left="150.0" right="600.0" top="500.0" />
+              </padding>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+    <TextArea id="txtAreaStav" fx:id="txtArea" layoutX="543.0" layoutY="235.0" prefHeight="399.0" prefWidth="478.0" wrapText="true" />
+    <TextArea fx:id="txtAreaStav" layoutX="543.0" layoutY="55.0" prefWidth="478.0" wrapText="true" />
+    <Label layoutX="685.0" layoutY="24.0" styleClass="label2" text="STAV TRANSAKCIE" />
+  </children>
+  <padding>
+    <Insets bottom="200.0" left="150.0" right="600.0" top="500.0" />
+  </padding>
+  <stylesheets>
+    <URL value="@main-view.css" />
+  </stylesheets>
+</AnchorPane>
