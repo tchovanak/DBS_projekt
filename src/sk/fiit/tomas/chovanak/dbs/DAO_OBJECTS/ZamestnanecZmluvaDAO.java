@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sk.fiit.tomas.chovanak.dbs.gui.MainViewController;
 
 public class ZamestnanecZmluvaDAO extends DAOobject{
 

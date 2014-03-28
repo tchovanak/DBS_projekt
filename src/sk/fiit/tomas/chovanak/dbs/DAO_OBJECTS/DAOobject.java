@@ -64,6 +64,7 @@ public class DAOobject {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} }
+	        MainViewController.outputState("Transakcia úspešne dokončená!\n");
 	    }
 		
 		return results;

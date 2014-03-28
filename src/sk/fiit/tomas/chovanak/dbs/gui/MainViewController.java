@@ -1,3 +1,4 @@
+
 package sk.fiit.tomas.chovanak.dbs.gui;
 
 import javafx.application.Platform;
@@ -6,8 +7,6 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import sk.fiit.tomas.chovanak.dbs.DAO_MANAGERS.DAOfactory;
@@ -17,9 +16,10 @@ import sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS.ClientDAO;
 import sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS.ProduktDAO;
 import sk.fiit.tomas.chovanak.dbs.DAO_OBJECTS.ZamestnanecZmluvaDAO;
 
-
+@SuppressWarnings("rawtypes")
 public class MainViewController {
 	
+	private static int counter = 0;
 
 	/*********** SECTION WITH FXML INJECTED OBJECTS **********************************/
 	
@@ -37,6 +37,10 @@ public class MainViewController {
 	
 	@FXML
 	private static ComboBox<String> cmbDatum;
+	
+	@FXML
+	private static ComboBox<String> cmbObjemEur;
+	
 
 	
 	@FXML
@@ -87,13 +91,42 @@ public class MainViewController {
 	private static Button btnStatistika1;
 	
 	@FXML
-	private static TableView tableView;
+	private static ComboBox<String> cmbZiskOd;
+	
+	@FXML
+	private static ComboBox<String> cmbZiskDo;
+	
+	@FXML
+	private static ComboBox<String> cmbProdukt2;
+	
+	
+	@FXML
+	private static Button btnStatistika2;
+	
+	
+	
+	@FXML
+	private static ComboBox<String> cmbZamestnanec3;
+	
+	@FXML
+	private static Button btnStatistika3;
+	
+	
+	
+	@FXML
+	private static ComboBox<String> cmbZamestnanec4;
+	
+	@FXML
+	private static ComboBox<String> cmbProdukt3;
+	
+	@FXML
+	private static Button btnVyhladaj;
+	
 	
 	
 	
 	@FXML
 	private static TextArea txtAreaStav;
-	
 	
 	@FXML
 	private static TextArea txtArea;
@@ -132,6 +165,8 @@ public class MainViewController {
 			public Object execute(DAOmanager manager) {
 				ObservableList<String> itemsProdukt = manager.getProduktDAO().getAllProductsNames();
 				cmbProdukt.setItems(itemsProdukt);
+				cmbProdukt2.setItems(itemsProdukt);
+				cmbProdukt3.setItems(itemsProdukt);
 				
 				ObservableList<String> itemsKlient = manager.getClientDAO().getAllClientNames();
 				cmbKlient.setItems(itemsKlient);
@@ -139,15 +174,18 @@ public class MainViewController {
 				ObservableList<String> itemsPredajca = manager.getZamestnanecZmluvaDAO().getAllNames();
 				cmbPredajca.setItems(itemsPredajca);
 				cmbZamestnanec2.setItems(itemsPredajca);
-				
+				cmbZamestnanec3.setItems(itemsPredajca);
+				cmbZamestnanec4.setItems(itemsPredajca);
 				
 				return null;
 			}
 			
 		});
+		
 	}
 	
 /*********************************** OUTPUT CONTROL METHODS *******************************************************/
+	
 	
 	public static void zobrazZamestnanec(){
 		
@@ -284,6 +322,8 @@ public class MainViewController {
 						System.out.println(itemsPredajca);
 						cmbPredajca.setItems(itemsPredajca);
 						cmbZamestnanec2.setItems(itemsPredajca);
+						cmbZamestnanec3.setItems(itemsPredajca);
+						cmbZamestnanec4.setItems(itemsPredajca);
 						return null;
 					}
 				
@@ -311,13 +351,14 @@ public class MainViewController {
 				final String id_produkt = ProduktDAO.convertNameToId(cmbProdukt.getValue());
 				final String id_klient = ClientDAO.convertNameToId(cmbKlient.getValue());
 				final String id_predajca = ZamestnanecZmluvaDAO.convertNameToId(cmbPredajca.getValue());
+				final String objem_eur = cmbObjemEur.getValue();
 				
 				//System.out.println(id_produkt + ", " + id_klient + ", " + id_predajca);
 				daoManager.OpenTransactionAndClose(new DaoCommand(){
 
 					@Override
 					public Object execute(DAOmanager manager) {
-						manager.getPredajProduktuDAO().insertNewPredaj(datum,id_produkt,id_klient,id_predajca);
+						manager.getPredajProduktuDAO().insertNewPredaj(datum,id_produkt,id_klient,id_predajca,objem_eur);
 						return null;
 					}
 				
@@ -337,16 +378,22 @@ public class MainViewController {
 			@Override
 			protected Object call() throws Exception {
 				
+				
+				
 				DAOfactory daoFactory = new DAOfactory();
 				DAOmanager daoManager =  daoFactory.createDAOmanager();
 					
+				final String ziskOd = cmbZiskOd.getValue();
+				final String ziskDo = cmbZiskDo.getValue();
+				final String produkt_id = ProduktDAO.convertNameToId(cmbProdukt2.getValue());
+				
 				daoManager.OpenTransactionAndClose(new DaoCommand(){
 
 					@Override
 					public Object execute(DAOmanager manager) {
 				
-						output(manager.getStatisticsDAO().getStatisticsOfRegionsIncome());
-							
+						output(manager.getStatisticsDAO().getStatisticsOfRegionsIncome(ziskOd,ziskDo,produkt_id));
+						
 						return null;
 					}
 				
@@ -357,15 +404,99 @@ public class MainViewController {
 		});
 	}
 	
+	public static void showTopSellersStatistics(){
+		
+		Platform.runLater(new Task(){
+
+			@Override
+			protected Object call() throws Exception {
+				
+				DAOfactory daoFactory = new DAOfactory();
+				DAOmanager daoManager =  daoFactory.createDAOmanager();
+					
+				daoManager.OpenTransactionAndClose(new DaoCommand(){
+
+					@Override
+					public Object execute(DAOmanager manager) {
+				
+						output(manager.getStatisticsDAO().getStatisticsOfTopSellers());
+						
+						return null;
+					}
+				
+				});
+				
+				return null;
+			}
+		});
+	}
 	
+	public static void showWithoutPermissionSellsStatistics(){
+		
+		Platform.runLater(new Task(){
+
+			@Override
+			protected Object call() throws Exception {
+				
+				DAOfactory daoFactory = new DAOfactory();
+				DAOmanager daoManager =  daoFactory.createDAOmanager();
+					
+				final String id_zamestnanec = ZamestnanecZmluvaDAO.convertNameToId(cmbZamestnanec3.getValue());
+				
+				daoManager.OpenTransactionAndClose(new DaoCommand(){
+
+					@Override
+					public Object execute(DAOmanager manager) {
+				
+						output(manager.getStatisticsDAO().getStatisticsOfSellsWithoutPermission(id_zamestnanec));
+						
+						return null;
+					}
+				
+				});
+				
+				return null;
+			}
+		});
+	}
+	
+	public static void searchForClient(){
+		
+		Platform.runLater(new Task(){
+
+			@Override
+			protected Object call() throws Exception {
+				
+				DAOfactory daoFactory = new DAOfactory();
+				DAOmanager daoManager =  daoFactory.createDAOmanager();
+					
+				final String id_zamestnanec = ZamestnanecZmluvaDAO.convertNameToId(cmbZamestnanec4.getValue());
+				final String id_produkt = ProduktDAO.convertNameToId(cmbProdukt3.getValue());
+				
+				daoManager.OpenTransactionAndClose(new DaoCommand(){
+
+					@Override
+					public Object execute(DAOmanager manager) {
+				
+						output(manager.getPredajProduktuDAO().searchForClient(id_zamestnanec,id_produkt));
+						
+						return null;
+					}
+				
+				});
+				
+				return null;
+			}
+		});
+	}
 	
 	public static void outputState(final String string) {
 		Platform.runLater(new Task(){
 
 			@Override
 			protected Object call() throws Exception {
-				txtAreaStav.clear();
-				txtAreaStav.appendText(string);
+				counter++;
+				txtAreaStav.appendText("LOG " + counter + " : " + string);
 				return null;
 			}
 		});
