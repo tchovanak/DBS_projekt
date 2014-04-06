@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="1377.0" styleClass=", theme" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sk.fiit.tomas.chovanak.dbs.gui.MainViewController">
+<AnchorPane fx:id="anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="1377.0" styleClass=", theme" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sk.fiit.tomas.chovanak.dbs.GUI.MainViewController">
   <!-- TODO Add Nodes -->
   <children>
     <Accordion expandedPane="$null" layoutX="229.0" layoutY="100.0" />

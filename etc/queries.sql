@@ -4,9 +4,9 @@
 -- hlavny select spoji dokopy najoinovanu tabulku s planom a vypocita rozdiel
 SELECT zisky.region, zisky.pocet_predajov, zisky.suma_zisku, plan.suma_plan, (zisky.suma_zisku/plan.suma_plan) as plnenie_planu 
 FROM (SELECT pred.id_produkt,reg.id as id_region,reg.nazov as region, count(*) as pocet_predajov, sum(pred.objem_eur) as suma_zisku
-FROM 
-	(SELECT * FROM predaj_produktu 
-	WHERE datum >= '1/1/2014' AND datum <= '28/2/2014') as pred 
+	FROM 
+		(SELECT * FROM predaj_produktu 
+		WHERE datum >= '1/1/2014' AND datum <= '28/2/2014') as pred 
 JOIN zamestnanec_zmluva zm ON pred.id_zamestnanec = zm.id 
 JOIN vedenie_pobocky ved_pob ON zm.id = ved_pob.id_zamestnanec 
 JOIN pobocka pob ON pob.id = ved_pob.id_pobocka 
@@ -57,7 +57,6 @@ SELECT count(*) FROM predaj_produktu pred
 WHERE pred.datum > '1/1/2014' AND id_zamestnanec = 4 AND 
 id_produkt NOT IN ( SELECT DISTINCT skol.id_produkt FROM skolenie_na_produkt skol
 WHERE skol.id_zamestnanec_vyskoleny = 4 );
-
 
 
 

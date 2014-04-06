@@ -1,4 +1,4 @@
-package sk.fiit.tomas.chovanak.dbs.utils;
+package sk.fiit.tomas.chovanak.dbs.UTILS;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

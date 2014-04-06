@@ -1,5 +1,5 @@
 
-package sk.fiit.tomas.chovanak.dbs.gui;
+package sk.fiit.tomas.chovanak.dbs.GUI;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -132,26 +132,6 @@ public class MainViewController {
 	private static TextArea txtArea;
 		
 	public static final String undefined = "null";
-	
-	
-	/**
-	 * STATICKA METODA - potrebujem ju na obidenie bugu - v comboboxe java fx sa neda nastavit preddefinovana null hodnota, 
-	 * tuto metodu volam z Mainu po tom ako sa inicializuju objekty z FXML suboru
-	 */
-	/*public static void initComboBoxes() {
-		cmbPrveMeno.setValue(undefined);
-		cmbPriezvisko.setValue(undefined);
-		cmbZamestnanec.setValue(undefined);
-		cmbDatumNastupu.setValue(undefined);
-		cmbDatumUkoncenia.setValue(undefined);	
-		
-		cmbPrveMenoNovy.setValue(undefined);
-		cmbPriezviskoNovy.setValue(undefined);
-		cmbZamestnanecNovy.setValue(undefined);
-		cmbDatumNastupuNovy.setValue(undefined);
-		cmbDatumUkonceniaNovy.setValue(undefined);	
-	}*/
-	
 	
 	/**
 	 * pri injekcii FXML objektov inicializuje comboboxy hodnotami z databazy

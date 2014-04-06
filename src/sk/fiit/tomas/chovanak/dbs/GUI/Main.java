@@ -1,4 +1,4 @@
-package sk.fiit.tomas.chovanak.dbs.gui;
+package sk.fiit.tomas.chovanak.dbs.GUI;
 	
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,13 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			 AnchorPane page = (AnchorPane) FXMLLoader.load(Main.class.getResource("view.fxml"));
-			// MainViewController.initComboBoxes();
+			 // MainViewController.initComboBoxes();
 	            Scene scene = new Scene(page);
 	            primaryStage.setScene(scene);
 	            primaryStage.setTitle("DBS - VIEW");
